@@ -1,6 +1,6 @@
 import Codeware.*
 
-class MainTest extends ScriptableSystem {
+public class RedTest extends ScriptableSystem {
   private let m_callbackSystem: wref<CallbackSystem>;
 
   private let m_isLoaded: Bool;
@@ -12,9 +12,7 @@ class MainTest extends ScriptableSystem {
   private func OnAttach() {
     this.m_isLoaded = false;
     this.m_modName = "<ModName>";
-    this.m_tests = [
-      // new BasicTest()
-    ];
+    this.m_tests = [];
     this.m_callbackSystem = GameInstance.GetCallbackSystem();
     this.m_callbackSystem.RegisterCallback(n"Session/Ready", this, n"OnSessionReady");
   }

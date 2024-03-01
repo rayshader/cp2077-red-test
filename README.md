@@ -10,7 +10,7 @@ Tiny Redscript framework to run unit tests with helper functions.
 2. Clone repository in your scripts directory:
 
 ```shell
-git clone https://github.com/rayshader/cp2077-red-test.git .
+git submodule add https://github.com/rayshader/cp2077-red-test.git scripts/RedTest/
 ```
 
 3. Create a Test directory:
@@ -47,10 +47,10 @@ public class MathTest extends BaseTest {
 
 5. Register your test:
 
-> File: scripts/RedTest/MainTest.reds
+> File: scripts/RedTest/RedTest.reds
 
 ```swift
-class MainTest extends ScriptableSystem {
+public class RedTest extends ScriptableSystem {
   // ...
 
   private func OnAttach() {
