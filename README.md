@@ -1,11 +1,14 @@
 # Red Test
+![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.11-blue)
+![GitHub License](https://img.shields.io/github/license/rayshader/cp2077-red-test)
+[![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
 Tiny Redscript framework to run unit tests with helper functions.
 
 # Getting started
 
 1. Install requirements:
-  - [Codeware] v1.8.0+ (in `scripts/Codeware` for autocompletion)
+  - [Codeware] v1.7.1+ (in `scripts/Codeware` for autocompletion)
 
 2. Clone repository in your scripts directory:
 
