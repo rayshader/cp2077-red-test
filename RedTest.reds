@@ -1,6 +1,6 @@
 import Codeware.*
 
-public class RedTest extends ScriptableSystem {
+public class RedTest {
   private let m_callbackSystem: wref<CallbackSystem>;
 
   private let m_isLoaded: Bool;
@@ -9,15 +9,15 @@ public class RedTest extends ScriptableSystem {
   
   /// Lifecycle ///
 
-  private func OnAttach() {
+  public func Setup(modName: String, tests: array<ref<BaseTest>>) {
     this.m_isLoaded = false;
-    this.m_modName = "<ModName>";
-    this.m_tests = [];
+    this.m_modName = modName;
+    this.m_tests = tests;
     this.m_callbackSystem = GameInstance.GetCallbackSystem();
     this.m_callbackSystem.RegisterCallback(n"Session/Ready", this, n"OnSessionReady");
   }
 
-  private func OnDetach() {
+  public func TearDown() {
     this.m_isLoaded = false;
     this.m_callbackSystem.UnregisterCallback(n"Session/Ready", this, n"OnSessionReady");
     this.m_callbackSystem = null;
