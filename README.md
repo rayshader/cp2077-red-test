@@ -23,8 +23,8 @@ mkdir -p scripts/Test/
 
 > File: scripts/Test/MathTest.reds
 
-- Rename MathTest to your convenience.
-- Change &lt;ModName&gt; with the name of your mod.
+- Rename `MathTest` to your convenience.
+- Change `<ModName>` with the name of your mod.
 
 ```swift
 public class MathTest extends BaseTest {
@@ -34,6 +34,7 @@ public class MathTest extends BaseTest {
     this.m_name = "Math";
 
     this.AddTest(n"Test_Add");
+    //this.AddTest(n"Test_");
   }
 
   private cb func Test_Add() {
@@ -42,27 +43,36 @@ public class MathTest extends BaseTest {
 
     this.ExpectInt32("5 + 5 == 10", actual, expect);
   }
+
+  /*
+  private cb func Test_() {
+          ^
+          | Callback is required!
+  }
+  */
 }
 ```
 
-5. Register your test:
+5. Create entry-point and register your test:
 
-> File: scripts/RedTest/RedTest.reds
+> File: scripts/Test/Main.reds
 
 ```swift
-public class RedTest extends ScriptableSystem {
-  // ...
+public class MainTest extends ScriptableSystem {
+  private let m_runner: ref<RedTest>;
+
+  /// Lifecycle ///
 
   private func OnAttach() {
-    // ...
-    this.m_modName = "<ModName>";
-    this.m_tests = [
+    this.m_runner = new RedTest();
+    this.m_runner.Setup("RedTest", [
       new MathTest()
-    ];
-    // ...
+    ]);
   }
 
-  // ...
+  private func OnDetach() {
+    this.m_runner.TearDown();
+  }
 }
 ```
 
