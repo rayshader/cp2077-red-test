@@ -55,8 +55,9 @@ public class MathTest extends BaseTest {
           | Callback is required!
   }
 
-  private cb ManuallyAddTest(arg1: Bool, arg2: String) {
-
+  private cb ManuallyAddTest(args: array<Variant>) {
+    let arg1: Bool = FromVariant(args[0]);
+    let arg2: String = FromVariant(args[1]);
   }
   */
 }
