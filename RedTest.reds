@@ -37,6 +37,7 @@ public class RedTest {
 
     for test in this.m_tests {
       test.Init();
+      test.Discover();
       result = test.Run();
       all_result.failCount += result.failCount;
       all_result.passCount += result.passCount;

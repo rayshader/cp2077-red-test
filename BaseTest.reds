@@ -38,6 +38,19 @@ public abstract class BaseTest {
 
   public func Init();
 
+  public func Discover() {
+    let cls = Reflection.GetClass(this.GetClassName());
+    let functions = cls.GetFunctions();
+
+    for fn in functions {
+      let name = fn.GetName();
+
+      if StrBeginsWith(s"\(name)", "Test_") {
+        this.AddTest(name);
+      }
+    }
+  }
+
   public func Run() -> ResultTest {
     LogChannel(n"Info", s"");
     LogChannel(n"Info", s"== \(this.m_modName) - Test - \(this.m_name) ==");
