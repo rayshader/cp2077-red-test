@@ -36,8 +36,7 @@ public class MathTest extends BaseTest {
     this.m_modName = "<ModName>";
     this.m_name = "Math";
 
-    this.AddTest(n"Test_Add");
-    //this.AddTest(n"Test_");
+    //this.AddTest(n"ManuallyAddTest", [true, "Optional arguments"]);
   }
 
   private cb func Test_Add() {
@@ -48,9 +47,16 @@ public class MathTest extends BaseTest {
   }
 
   /*
+                  | Start with prefix "Test_" to
+                  | automatically discover your test.
+                  v
   private cb func Test_() {
           ^
           | Callback is required!
+  }
+
+  private cb ManuallyAddTest(arg1: Bool, arg2: String) {
+
   }
   */
 }
