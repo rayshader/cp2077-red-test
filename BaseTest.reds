@@ -7,11 +7,11 @@ public struct ResultTest {
 }
 
 public class CallbackTest {
-  private let m_target: ref<BaseTest>;
+  private let m_target: wref<IScriptable>;
   private let m_fn: CName;
   private let m_arguments: array<Variant>;
 
-  public static func Create(target: ref<BaseTest>, fn: CName, opt arguments: array<Variant>) -> ref<CallbackTest> {
+  public static func Create(target: wref<IScriptable>, fn: CName, opt arguments: array<Variant>) -> ref<CallbackTest> {
     let self = new CallbackTest();
 
     self.m_target = target;
