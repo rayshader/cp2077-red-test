@@ -26,6 +26,13 @@ public class CallbackTest {
 
     function.Call(this.m_target, this.m_arguments);
   }
+
+  public func AsyncCall(next: ref<CallbackTest>) {
+    let type = Reflection.GetClassOf(this.m_target);
+    let function = type.GetFunction(this.m_fn);
+
+    function.Call(this.m_target, [next]);
+  }
 }
 
 public abstract class BaseTest {
@@ -35,6 +42,15 @@ public abstract class BaseTest {
 
   protected let m_modName: String;
   protected let m_name: String;
+  protected let m_isAsync: Bool = false;
+
+  public func IsAsync() -> Bool {
+    return this.m_isAsync;
+  }
+
+  public func GetResult() -> ResultTest {
+    return this.m_result;
+  }
 
   public func Init();
 
@@ -54,9 +70,7 @@ public abstract class BaseTest {
   public func Run() -> ResultTest {
     LogChannel(n"Info", s"");
     LogChannel(n"Info", s"== \(this.m_modName) - Test - \(this.m_name) ==");
-    this.m_result.failCount = 0;
-    this.m_result.passCount = 0;
-    this.m_result.totalCount = 0;
+    this.m_result = new ResultTest(0, 0, 0);
     let size = ArraySize(this.m_tests);
     let i = 0;
 
@@ -70,8 +84,39 @@ public abstract class BaseTest {
     return this.m_result;
   }
 
-  protected func AddTest(fn: CName, opt args: array<Variant>) {
-    ArrayPush(this.m_tests, CallbackTest.Create(this, fn, args));
+  public func AsyncRun(done: ref<CallbackTest>) -> Void {
+    LogChannel(n"Info", s"");
+    LogChannel(n"Info", s"== \(this.m_modName) - Test - \(this.m_name) ==");
+    if ArraySize(this.m_tests) == 0 {
+      LogChannel(n"Info", s"");
+      LogChannel(n"Info", s" No unit tests");
+      LogChannel(n"Info", "");
+      done.Call();
+      return;
+    }
+    this.m_result = new ResultTest(0, 0, 0);
+    let next = CallbackTest.Create(this, n"AsyncRunNext", [0, done]);
+    let test = this.m_tests[0];
+
+    test.AsyncCall(next);
+    LogChannel(n"Info", "");
+  }
+
+  private cb func AsyncRunNext(index: Int32, done: ref<CallbackTest>) {
+    index += 1;
+    if index >= ArraySize(this.m_tests) {
+      done.Call();
+      return;
+    }
+    let next = CallbackTest.Create(this, n"AsyncRunNext", [index, done]);
+    let test = this.m_tests[index];
+
+    test.AsyncCall(next);
+    LogChannel(n"Info", "");
+  }
+
+  protected func AddTest(fn: CName) {
+    ArrayPush(this.m_tests, CallbackTest.Create(this, fn));
   }
 
   protected func ExpectBool(from: String, actual: Bool, expected: Bool) -> Bool {
