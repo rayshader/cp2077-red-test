@@ -98,7 +98,7 @@ public class MainTest extends ScriptableSystem {
 > ExpectInt64(name: String, actual: Int64, expect: Int64)  
 > ExpectUint64(name: String, actual: Uint64, expect: Uint64)  
 > ExpectDouble(name: String, actual: Double, expect: Double)  
-> ExpectString(name: String, actual: String, expect: String) -> Bool 
+> ExpectString(name: String, actual: String, expect: String) -> Bool  
 > ExpectUnicodeString(name: String, actual: String, expect: String) -> Bool
 
 You can use `ExpectString` to test for enums like this:
