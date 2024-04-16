@@ -36,9 +36,13 @@ public static func Add(a: Int32, b: Int32) -> Int32 {
 
 public class MathTest extends BaseTest {
 
-  public func Init() {
+  public func Create() {
     this.m_modName = "<ModName>";
     this.m_name = "Math";
+  }
+
+  public func Setup() {
+    // e.g. get references before running tests.
   }
 
   private cb func Test_Add() {
@@ -140,7 +144,7 @@ public static func CallAsyncFunction(callback: ref<CustomCallback>) -> Void;
 
 public class SpawnTest extends BaseTest {
 
-  public func Init() {
+  public func Create() {
     // ...
     this.m_isAsync = true; // REQUIRED
   }

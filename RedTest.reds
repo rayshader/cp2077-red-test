@@ -18,7 +18,7 @@ public class RedTest {
     this.m_tests = [];
     this.m_asyncTests = [];
     for test in tests {
-      test.Init();
+      test.Create();
       test.Discover();
       if !test.IsAsync() {
         ArrayPush(this.m_tests, test);
@@ -60,6 +60,7 @@ public class RedTest {
 
   private func Run() {
     for test in this.m_tests {
+      test.Setup();
       let result = test.Run();
 
       this.m_results.failCount += result.failCount;
@@ -75,6 +76,7 @@ public class RedTest {
     let next = CallbackTest.Create(this, n"AsyncRunNext", [0]);
     let asyncTest = this.m_asyncTests[0];
 
+    asyncTest.Setup();
     asyncTest.AsyncRun(next);
     return false;
   }
@@ -93,6 +95,7 @@ public class RedTest {
     let next = CallbackTest.Create(this, n"AsyncRunNext", [index]);
     let asyncTest = this.m_asyncTests[index];
 
+    asyncTest.Setup();
     asyncTest.AsyncRun(next);
   }
 

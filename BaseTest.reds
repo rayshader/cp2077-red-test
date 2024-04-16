@@ -52,7 +52,7 @@ public abstract class BaseTest {
     return this.m_result;
   }
 
-  public func Init();
+  public abstract func Create();
 
   public func Discover() {
     let cls = Reflection.GetClass(this.GetClassName());
@@ -66,6 +66,8 @@ public abstract class BaseTest {
       }
     }
   }
+
+  public abstract func Setup();
 
   public func Run() -> ResultTest {
     LogChannel(n"Info", s"");
