@@ -131,6 +131,38 @@ public abstract class BaseTest {
     }
   }
 
+  protected func ExpectInt8(from: String, actual: Int8, expected: Int8) {
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"\(actual)", s"\(expected)");
+    } else {
+      this.LogPass(from);
+    }
+  }
+
+  protected func ExpectUint8(from: String, actual: Uint8, expected: Uint8) {
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"\(actual)", s"\(expected)");
+    } else {
+      this.LogPass(from);
+    }
+  }
+
+  protected func ExpectInt16(from: String, actual: Int16, expected: Int16) {
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"\(actual)", s"\(expected)");
+    } else {
+      this.LogPass(from);
+    }
+  }
+
+  protected func ExpectUint16(from: String, actual: Uint16, expected: Uint16) {
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"\(actual)", s"\(expected)");
+    } else {
+      this.LogPass(from);
+    }
+  }
+
   protected func ExpectInt32(from: String, actual: Int32, expected: Int32) {
     if !Equals(actual, expected) {
       this.LogFail(from, s"\(actual)", s"\(expected)");
