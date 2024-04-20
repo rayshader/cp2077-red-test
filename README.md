@@ -101,6 +101,7 @@ public class MainTest extends ScriptableSystem {
 > ExpectUint32(name: String, actual: Uint32, expect: Uint32)  
 > ExpectInt64(name: String, actual: Int64, expect: Int64)  
 > ExpectUint64(name: String, actual: Uint64, expect: Uint64)  
+> ExpectFloat(name: String, actual: Float, expect: Float)  
 > ExpectDouble(name: String, actual: Double, expect: Double)  
 > ExpectString(name: String, actual: String, expect: String) -> Bool  
 > ExpectUnicodeString(name: String, actual: String, expect: String) -> Bool

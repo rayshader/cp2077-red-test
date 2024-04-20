@@ -163,6 +163,14 @@ public abstract class BaseTest {
     }
   }
 
+  protected func ExpectFloat(from: String, actual: Float, expected: Float) {
+    if !FloatIsEqual(actual, expected) {
+      this.LogFail(from, s"\(actual)", s"\(expected)");
+    } else {
+      this.LogPass(from);
+    }
+  }
+
   protected func ExpectDouble(from: String, actual: Double, expected: Double) {
     // Use formatted string to compare, raw type comparison is not precise.
     if !Equals(s"\(actual)", s"\(expected)") {
