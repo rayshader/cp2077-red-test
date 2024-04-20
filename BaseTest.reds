@@ -230,6 +230,36 @@ public abstract class BaseTest {
     }
   }
 
+  protected func ExpectCName(from: String, actual: CName, expected: CName) -> Bool {
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"'\(actual)'", s"'\(expected)'");
+      return false;
+    } else {
+      this.LogPass(from);
+      return true;
+    }
+  }
+
+  protected func ExpectResRef(from: String, actual: ResRef, expected: ResRef) -> Bool {
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"'\(actual)'", s"'\(expected)'");
+      return false;
+    } else {
+      this.LogPass(from);
+      return true;
+    }
+  }
+
+  protected func ExpectTweakDBID(from: String, actual: TweakDBID, expected: TweakDBID) -> Bool {
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"'\(actual)'", s"'\(expected)'");
+      return false;
+    } else {
+      this.LogPass(from);
+      return true;
+    }
+  }
+
   protected func LogFail(from: String, actual: String, expected: String) {
     LogChannel(n"Error", s"FAIL: \(from)");
     LogChannel(n"Error", s"  Actual: \(actual)");

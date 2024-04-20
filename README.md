@@ -97,18 +97,26 @@ public class MainTest extends ScriptableSystem {
 # Functions
 
 > ExpectBool(name: String, actual: Bool, expect: Bool) -> Bool  
+>   
 > ExpectInt8(name: String, actual: Int8, expect: Int8)  
-> ExpectUint8(name: String, actual: Uint8, expect: Uint8)  
 > ExpectInt16(name: String, actual: Int16, expect: Int16)  
-> ExpectUint16(name: String, actual: Uint16, expect: Uint16)  
 > ExpectInt32(name: String, actual: Int32, expect: Int32)  
-> ExpectUint32(name: String, actual: Uint32, expect: Uint32)  
 > ExpectInt64(name: String, actual: Int64, expect: Int64)  
+>   
+> ExpectUint8(name: String, actual: Uint8, expect: Uint8)  
+> ExpectUint16(name: String, actual: Uint16, expect: Uint16)  
+> ExpectUint32(name: String, actual: Uint32, expect: Uint32)  
 > ExpectUint64(name: String, actual: Uint64, expect: Uint64)  
+>   
 > ExpectFloat(name: String, actual: Float, expect: Float)  
 > ExpectDouble(name: String, actual: Double, expect: Double)  
+>   
 > ExpectString(name: String, actual: String, expect: String) -> Bool  
-> ExpectUnicodeString(name: String, actual: String, expect: String) -> Bool
+> ExpectUnicodeString(name: String, actual: String, expect: String) -> Bool  
+>   
+> ExpectCName(name: String, actual: CName, expect: CName) -> Bool  
+> ExpectResRef(name: String, actual: ResRef, expect: ResRef) -> Bool  
+> ExpectTweakDBID(name: String, actual: TweakDBID, expect: TweakDBID) -> Bool
 
 You can use `ExpectString` to test for enums like this:
 
