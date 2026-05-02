@@ -1,5 +1,3 @@
-import Codeware.*
-
 public class RedTest {
   private let m_callbackSystem: wref<CallbackSystem>;
 
@@ -34,25 +32,24 @@ public class RedTest {
     this.m_isLoaded = false;
     this.m_callbackSystem.UnregisterCallback(n"Session/Ready", this, n"OnSessionReady");
     this.m_callbackSystem = null;
-    LogChannel(n"Info", "");
-    LogChannel(n"Info", s"Tests: \(this.m_results.failCount) failed, \(this.m_results.passCount) passed, \(this.m_results.totalCount) total");
-    LogChannel(n"Info", "");
-    LogChannel(n"Info", s"== \(this.m_modName) - All Tests ==");
+    FTLog("");
+    FTLog(s"Tests: \(this.m_results.failCount) failed, \(this.m_results.passCount) passed, \(this.m_results.totalCount) total");
+    FTLog("");
+    FTLog(s"== \(this.m_modName) - All Tests ==");
   }
 
   /// Game events ///
 
   private cb func OnSessionReady(event: ref<GameSessionEvent>) {
     let isPreGame = event.IsPreGame();
-
     if !isPreGame || this.m_isLoaded {
       return;
     }
-    LogChannel(n"Info", s"== \(this.m_modName) - All Tests ==");
-    this.m_results = new ResultTest(0, 0, 0);
+
+    FTLog(s"== \(this.m_modName) - All Tests ==");
+    this.m_results = ResultTest(0, 0, 0);
     this.Run();
     let isFinished = this.AsyncRun();
-
     if isFinished {
       this.TearDown();
     }
@@ -61,8 +58,8 @@ public class RedTest {
   private func Run() {
     for test in this.m_tests {
       test.Setup();
-      let result = test.Run();
 
+      let result = test.Run();
       this.m_results.failCount += result.failCount;
       this.m_results.passCount += result.passCount;
       this.m_results.totalCount += result.totalCount;
@@ -73,9 +70,9 @@ public class RedTest {
     if ArraySize(this.m_asyncTests) == 0 {
       return true;
     }
+
     let next = CallbackTest.Create(this, n"AsyncRunNext", [0]);
     let asyncTest = this.m_asyncTests[0];
-
     asyncTest.Setup();
     asyncTest.AsyncRun(next);
     return false;
@@ -83,18 +80,18 @@ public class RedTest {
 
   private cb func AsyncRunNext(index: Int32) {
     let result = this.m_asyncTests[index].GetResult();
-
     this.m_results.failCount += result.failCount;
     this.m_results.passCount += result.passCount;
     this.m_results.totalCount += result.totalCount;
+
     index += 1;
     if index >= ArraySize(this.m_asyncTests) {
       this.TearDown();
       return;
     }
+
     let next = CallbackTest.Create(this, n"AsyncRunNext", [index]);
     let asyncTest = this.m_asyncTests[index];
-
     asyncTest.Setup();
     asyncTest.AsyncRun(next);
   }

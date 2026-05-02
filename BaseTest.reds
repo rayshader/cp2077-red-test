@@ -1,5 +1,3 @@
-import Codeware.*
-
 public struct ResultTest {
   let failCount: Int32;
   let passCount: Int32;
@@ -13,25 +11,22 @@ public class CallbackTest {
 
   public static func Create(target: wref<IScriptable>, fn: CName, opt arguments: array<Variant>) -> ref<CallbackTest> {
     let self = new CallbackTest();
-
     self.m_target = target;
     self.m_fn = fn;
     self.m_arguments = arguments;
     return self;
   }
 
-  public func Call() {
-    let type = Reflection.GetClassOf(this.m_target);
-    let function = type.GetFunction(this.m_fn);
-
-    function.Call(this.m_target, this.m_arguments);
+  public func Call() -> Variant {
+    return Reflection.GetClassOf(ToVariant(this.m_target))
+                     .GetFunction(this.m_fn)
+                     .Call(this.m_target, this.m_arguments);
   }
 
-  public func AsyncCall(next: ref<CallbackTest>) {
-    let type = Reflection.GetClassOf(this.m_target);
-    let function = type.GetFunction(this.m_fn);
-
-    function.Call(this.m_target, [next]);
+  public func AsyncCall(next: ref<CallbackTest>) -> Variant {
+    return Reflection.GetClassOf(ToVariant(this.m_target))
+                     .GetFunction(this.m_fn)
+                     .Call(this.m_target, [next]);
   }
 }
 
@@ -52,7 +47,7 @@ public abstract class BaseTest {
     return this.m_result;
   }
 
-  public abstract func Create();
+  public func Create();
 
   public func Discover() {
     let cls = Reflection.GetClass(this.GetClassName());
@@ -67,41 +62,42 @@ public abstract class BaseTest {
     }
   }
 
-  public abstract func Setup();
+  public func Setup();
 
   public func Run() -> ResultTest {
-    LogChannel(n"Info", s"");
-    LogChannel(n"Info", s"== \(this.m_modName) - Test - \(this.m_name) ==");
-    this.m_result = new ResultTest(0, 0, 0);
+    FTLog(s"");
+    FTLog(s"== \(this.m_modName) - Test - \(this.m_name) ==");
+    this.m_result = ResultTest(0, 0, 0);
+
     let size = ArraySize(this.m_tests);
     let i = 0;
-
     while i < size {
       this.m_tests[i].Call();
       i += 1;
       if i < size {
-        LogChannel(n"Info", "");
+        FTLog("");
       }
     }
+
     return this.m_result;
   }
 
   public func AsyncRun(done: ref<CallbackTest>) -> Void {
-    LogChannel(n"Info", s"");
-    LogChannel(n"Info", s"== \(this.m_modName) - Test - \(this.m_name) ==");
+    FTLog(s"");
+    FTLog(s"== \(this.m_modName) - Test - \(this.m_name) ==");
     if ArraySize(this.m_tests) == 0 {
-      LogChannel(n"Info", s"");
-      LogChannel(n"Info", s" No unit tests");
-      LogChannel(n"Info", "");
+      FTLog(s"");
+      FTLog(s" No unit tests");
+      FTLog("");
       done.Call();
       return;
     }
-    this.m_result = new ResultTest(0, 0, 0);
+
+    this.m_result = ResultTest(0, 0, 0);
     let next = CallbackTest.Create(this, n"AsyncRunNext", [0, done]);
     let test = this.m_tests[0];
-
     test.AsyncCall(next);
-    LogChannel(n"Info", "");
+    FTLog("");
   }
 
   private cb func AsyncRunNext(index: Int32, done: ref<CallbackTest>) {
@@ -110,11 +106,11 @@ public abstract class BaseTest {
       done.Call();
       return;
     }
+
     let next = CallbackTest.Create(this, n"AsyncRunNext", [index, done]);
     let test = this.m_tests[index];
-
     test.AsyncCall(next);
-    LogChannel(n"Info", "");
+    FTLog("");
   }
 
   protected func AddTest(fn: CName) {
@@ -261,15 +257,15 @@ public abstract class BaseTest {
   }
 
   protected func LogFail(from: String, actual: String, expected: String) {
-    LogChannel(n"Error", s"FAIL: \(from)");
-    LogChannel(n"Error", s"  Actual: \(actual)");
-    LogChannel(n"Error", s"  Expected: \(expected)");
+    FTLogError(s"FAIL: \(from)");
+    FTLogError(s"  Actual: \(actual)");
+    FTLogError(s"  Expected: \(expected)");
     this.m_result.failCount += 1;
     this.m_result.totalCount += 1;
   }
 
   protected func LogPass(from: String) {
-    LogChannel(n"Info", s"PASS: \(from)");
+    FTLog(s"PASS: \(from)");
     this.m_result.passCount += 1;
     this.m_result.totalCount += 1;
   }
